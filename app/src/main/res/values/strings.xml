@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AppFirebaseDemoFCM</string>
+    <string name="default_notification_channel_name" translatable="true">Weather</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="text_item">Message</string>
+    <string name="bt_sent">Sent</string>
+    <string name="facebook_app_id">2031988096881424</string>
+    <string name="fb_login_protocol_scheme">fb2031988096881424</string>
+
+</resources>
