@@ -1,6 +1,5 @@
 package com.example.appfirebasedemofcm.appfirebasedemofcm;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,29 +25,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentUser extends Fragment {
-    private RecyclerView myFriendsList;
-    private  DatabaseReference FriendsReference;
-    private FirebaseAuth mAuth;
-
-    String online_user_id;
-    private View myMainView;
-
-    public FragmentUser(){
-
-    }
-    @SuppressLint("WrongViewCast")
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState)
-    {
-        myMainView = inflater.inflate( R.layout.user_fragment, container, false );
-
-        myFriendsList = (RecyclerView) myMainView.findViewById( R.id.friends_list );
-        mAuth=FirebaseAuth.getInstance();
-        online_user_id = mAuth.getCurrentUser().getUid();
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private View mMainView;
+    //private DatabaseReference mUserDatabase;
+    private List<Friends> lFriends;
 
 
-
-
-        return myMainView;
-    }
+    public FragmentUser() {
+        lFriends = new ArrayList<Friends>();
 
     }
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mMainView = inflater.inflate(R.layout.user_fragment,container,false);
+
+        mRecyclerView = (RecyclerView) mMainView.findViewById(R.id.friends_list);
+
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        Friends friend = new Friends("url", "thien");
+        Friends friend2 = new Friends("url", "hoa");
+        lFriends.add(friend);
+        lFriends.add(friend2);
+        mAdapter = new FriendAdapter(lFriends);
+        mRecyclerView.setAdapter(mAdapter);
+        return mMainView;
+    }
+//    private void writeNewUser( String name) {
+//        User user = new User(name);
+//
+//        mUserDatabase.child("Friends").setValue(user);
+//    }
+
+}
