@@ -31,9 +31,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         View v;
 
         if (viewType == CHAT_END) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_chat_end, parent, false);
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_received, parent, false);
         } else
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_chat_start, parent, false);
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_sent, parent, false);
 
         return new ViewHolder(v);
     }
@@ -66,7 +66,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
         ViewHolder(View v) {
             super(v);
-            mTextView = (TextView) itemView.findViewById(R.id.tvMessage);
+            //mTextView = (TextView) itemView.findViewById(R.id.);
         }
     }
 }
