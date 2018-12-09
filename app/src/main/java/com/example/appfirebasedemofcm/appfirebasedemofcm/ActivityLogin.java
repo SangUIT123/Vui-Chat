@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appfirebasedemofcm.appfirebasedemofcm.Models.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -32,6 +33,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ActivityLogin extends AppCompatActivity {
     private CallbackManager mCallbackManager;
@@ -143,6 +146,14 @@ public class ActivityLogin extends AppCompatActivity {
                                 Toast.makeText(ActivityLogin.this, "Not sucessfull", Toast.LENGTH_SHORT).show();
                             } else {
                                 startActivity(new Intent(ActivityLogin.this, LayoutFragment.class));
+
+                                DatabaseReference mDatabaseUser = FirebaseDatabase.getInstance().getReference("User");
+                                String userId = mDatabaseUser.push().getKey();
+                                String uEmail = loginEmailId.getText().toString();
+                                String uPassword = logInpasswd.getText().toString();
+
+                                User user = new User(uEmail, uPassword,"");
+                                mDatabaseUser.child(userId).setValue(user);
                             }
                         }
                     });
