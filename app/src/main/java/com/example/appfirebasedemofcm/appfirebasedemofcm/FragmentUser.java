@@ -29,10 +29,10 @@ public class FragmentUser extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private View mMainView;
-    private DatabaseReference mUserDatabase;
+    //private DatabaseReference mUserDatabase;
     private List<Friends> lFriends;
-    private final String TAG = "";
-    private ValueEventListener userListener;
+
+
     public FragmentUser() {
         lFriends = new ArrayList<Friends>();
 
@@ -42,34 +42,15 @@ public class FragmentUser extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMainView = inflater.inflate(R.layout.user_fragment,container,false);
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference();
-        //writeNewUser("thien");
-        userListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final String UserName = dataSnapshot.child("UserName").getValue().toString();
-                // String profileUrl = dataSnapshot.child("profileUrl").getValue().toString();
-                Friends friend1 = new Friends("profileUrl", UserName);
-
-                lFriends.add(friend1);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        mUserDatabase.child("Friends").addValueEventListener(userListener);
-
         mRecyclerView = (RecyclerView) mMainView.findViewById(R.id.friends_list);
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        Friends friend = new Friends("url", "thien");
-//        Friends friend2 = new Friends("url", "hoa");
-//        lFriends.add(friend);
-//        lFriends.add(friend2);
+        Friends friend = new Friends("url", "thien");
+        Friends friend2 = new Friends("url", "hoa");
+        lFriends.add(friend);
+        lFriends.add(friend2);
         mAdapter = new FriendAdapter(lFriends);
         mRecyclerView.setAdapter(mAdapter);
         return mMainView;

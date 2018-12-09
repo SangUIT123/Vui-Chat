@@ -24,11 +24,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHolder>{
     private List<Friends> lFriends ;
-
+    private ValueEventListener userListener;
     private DatabaseReference mUserDatabase;
+    private final String TAG = "";
 
-
-    public FriendAdapter( List<Friends> _lFriends){
+    public FriendAdapter(List<Friends> _lFriends){
         lFriends = _lFriends;
     }
 
@@ -47,6 +47,25 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
+        mUserDatabase = FirebaseDatabase.getInstance().getReference();
+        //writeNewUser("thien");
+        userListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String UserName = dataSnapshot.child("FriendName").getValue().toString();
+                // String profileUrl = dataSnapshot.child("profileUrl").getValue().toString();
+                Friends friend1 = new Friends("profileUrl", UserName);
+
+                lFriends.add(friend1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        mUserDatabase.child("Friends").addValueEventListener(userListener);
         holder.mUserName.setText(lFriends.get(i).GetFriendName() );
        // holder.mCircleImageView.()
 
