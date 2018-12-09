@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.MyViewHolder>{
     private List<Friends> lFriends ;
 
-
+    private DatabaseReference mUserDatabase;
 
 
     public FriendAdapter( List<Friends> _lFriends){
